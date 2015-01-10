@@ -1,39 +1,70 @@
 package com.app.aarti.controller;
 
-public class MediaPlayerUtility
-{
-  public static int getProgressPercentage(long paramLong1, long paramLong2)
-  {
-    Double.valueOf(0.0D);
-    long l1 = (int)(paramLong1 / 1000L);
-    long l2 = (int)(paramLong2 / 1000L);
-    return Double.valueOf(100.0D * (l1 / l2)).intValue();
-  }
-  
-  public static String milliSecondsToTimer(long paramLong)
-  {
-    String str1 = "";
-    int i = (int)(paramLong / 3600000L);
-    int j = (int)(paramLong % 3600000L) / 60000;
-    int k = (int)(paramLong % 3600000L % 60000L / 1000L);
-    if (i > 0) {
-      str1 = i + ":";
-    }
-    if (k < 10) {}
-    for (String str2 = "0" + k;; str2 = k) {
-      return str1 + j + ":" + str2;
-    }
-  }
-  
-  public static int progressToTimer(int paramInt1, int paramInt2)
-  {
-    int i = paramInt2 / 1000;
-    return 1000 * (int)(paramInt1 / 100.0D * i);
-  }
-}
+public class MediaPlayerUtility {
 
-
-/* Location:           C:\Users\sahil.jain\Desktop\dex2jar-0.0.9.15\dex2jar-0.0.9.15\Aarti_com.app.aarti_1.0_1-dex2jar.jar
- * Qualified Name:     com.app.aarti.controller.MediaPlayerUtility
- * JD-Core Version:    0.7.0.1
- */
+	/**
+	 * Function to convert milliseconds time to Timer Format
+	 * Hours:Minutes:Seconds
+	 * */
+	public static String milliSecondsToTimer(long milliseconds) {
+		String finalTimerString = "";
+		String secondsString = "";
+
+		// Convert total duration into time
+		int hours = (int) (milliseconds / (1000 * 60 * 60));
+		int minutes = (int) (milliseconds % (1000 * 60 * 60)) / (1000 * 60);
+		int seconds = (int) ((milliseconds % (1000 * 60 * 60)) % (1000 * 60) / 1000);
+		// Add hours if there
+		if (hours > 0) {
+			finalTimerString = hours + ":";
+		}
+
+		// Prepending 0 to seconds if it is one digit
+		if (seconds < 10) {
+			secondsString = "0" + seconds;
+		} else {
+			secondsString = "" + seconds;
+		}
+
+		finalTimerString = finalTimerString + minutes + ":" + secondsString;
+
+		// return timer string
+		return finalTimerString;
+	}
+
+	/**
+	 * Function to get Progress percentage
+	 * 
+	 * @param currentDuration
+	 * @param totalDuration
+	 * */
+	public static int getProgressPercentage(long currentDuration, long totalDuration) {
+		Double percentage = (double) 0;
+
+		long currentSeconds = (int) (currentDuration / 1000);
+		long totalSeconds = (int) (totalDuration / 1000);
+
+		// calculating percentage
+		percentage = (((double) currentSeconds) / totalSeconds) * 100;
+
+		// return percentage
+		return percentage.intValue();
+	}
+
+	/**
+	 * Function to change progress to timer
+	 * 
+	 * @param progress
+	 *            -
+	 * @param totalDuration
+	 *            returns current duration in milliseconds
+	 * */
+	public static int progressToTimer(int progress, int totalDuration) {
+		int currentDuration = 0;
+		totalDuration = (int) (totalDuration / 1000);
+		currentDuration = (int) ((((double) progress) / 100) * totalDuration);
+
+		// return current duration in milliseconds
+		return currentDuration * 1000;
+	}
+}

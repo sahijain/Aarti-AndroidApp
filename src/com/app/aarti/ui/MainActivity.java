@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MenuItem;
+
+import com.app.aarti.R;
 import com.app.aarti.controller.MainActivityController;
 
 public class MainActivity extends FragmentActivity {
@@ -22,16 +24,19 @@ public class MainActivity extends FragmentActivity {
 		super.onConfigurationChanged(paramConfiguration);
 		ui.onConfigurationChanged(paramConfiguration);
 	}
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		Log.d("Sahil","onCreate() MainActivity Created");
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.aarti_activity_main_layout);
 
-	protected void onCreate(Bundle paramBundle) {
-		Log.d("Sahil", "onCreate() MainActivity Created");
-		super.onCreate(paramBundle);
-		setContentView(2130903040);
 		mController = new MainActivityController(this);
 		mController.onCreate();
+
 		ui = new MainActivityUi(this, mController);
-		mController.setUi(this.ui);
-	}
+		mController.setUi(ui);
+
+	}	
 
 	protected void onDestroy() {
 		Log.d("Sahil", "onDestroy() MainActivity Destroyed");

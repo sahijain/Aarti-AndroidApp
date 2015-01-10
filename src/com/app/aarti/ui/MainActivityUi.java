@@ -2,6 +2,7 @@ package com.app.aarti.ui;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -51,46 +52,52 @@ public class MainActivityUi implements AdapterView.OnItemClickListener {
 	}
 
 	private void initNavigationDrawer() {
-		
-		mDrawerLayout = ((DrawerLayout) this.mActivity
-				.findViewById(2131099660));
-		mDrawerList = ((ListView) mActivity.findViewById(2131099663));
-		ListViewAdapter localListViewAdapter = new ListViewAdapter(
-				mActivity.getResources().getStringArray(2131034114),
-				mActivity.getResources().obtainTypedArray(2131034112));
-		mDrawerList.setAdapter(localListViewAdapter);
+		mDrawerLayout = (DrawerLayout) mActivity
+				.findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) mActivity.findViewById(R.id.left_drawer);
+		final String[] array = mActivity.getResources().getStringArray(
+				R.array.drwawer_list);
+		TypedArray drawerIcons = mActivity.getResources().obtainTypedArray(
+				R.array.drawer_icons);
+
+		ListViewAdapter drawerListAdapter = new ListViewAdapter(array,
+				drawerIcons);
+		mDrawerList.setAdapter(drawerListAdapter);
 		mDrawerList.setOnItemClickListener(this);
-		mDrawerToggle = new ActionBarDrawerToggle(mActivity,
-				mDrawerLayout, 2130837513, 2131230732, 2131230733) {
-			public void onDrawerClosed(View paramAnonymousView) {
-				super.onDrawerClosed(paramAnonymousView);
-				mActivity.getActionBar().setTitle(
-						mCurrentTitle);
+
+		mDrawerToggle = new ActionBarDrawerToggle(mActivity, mDrawerLayout,
+				R.drawable.ic_drawer, R.string.drawer_open,
+				R.string.drawer_close) {
+
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view) {
+				super.onDrawerClosed(view);
+				mActivity.getActionBar().setTitle(mCurrentTitle);
 			}
 
-			public void onDrawerOpened(View paramAnonymousView) {
-				super.onDrawerOpened(paramAnonymousView);
-				MainActivityUi.this.mActivity.getActionBar().setTitle(
-						mDefaultTitle);
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				mActivity.getActionBar().setTitle(mDefaultTitle);
 			}
 		};
+
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
 		mActivity.getActionBar().setDisplayHomeAsUpEnabled(true);
 		mActivity.getActionBar().setHomeButtonEnabled(true);
 	}
 
 	private void initUi() {
-		
-		String str = (String) this.mActivity.getTitle();
-		mDefaultTitle = str;
-		mCurrentTitle = str;
-		mBaseLayout = ((RelativeLayout) mActivity
-				.findViewById(2131099661));
-		mViewPager = ((AartiViewPager) mBaseLayout
-				.findViewById(2131099662));
+		mCurrentTitle = mDefaultTitle = (String) mActivity.getTitle();
+		mBaseLayout = (RelativeLayout) mActivity
+				.findViewById(R.id.parent_layout);
+		mViewPager = (AartiViewPager) mBaseLayout
+				.findViewById(R.id.aarti_viewpager);
 		initNavigationDrawer();
-		mAartilist = mActivity.getResources().getStringArray(
-				2131034113);
+		Resources res = mActivity.getResources();
+		mAartilist = res.getStringArray(R.array.Aarti_list);
+
 		mViewPager.setAdapter(new ViewPagerAdapter());
 		mViewPager.setPageMargin(30);
 	}
