@@ -354,9 +354,11 @@ int drawable ic_action_good 0x7f020035
 int drawable ic_action_important 0x7f020036
 int drawable ic_action_pause 0x7f020037
 int drawable ic_action_play 0x7f020038
-int drawable ic_action_share 0x7f020039
-int drawable ic_drawer 0x7f02003a
-int drawable ic_launcher 0x7f02003b
+int drawable ic_action_repeat 0x7f020039
+int drawable ic_action_replay 0x7f02003a
+int drawable ic_action_share 0x7f02003b
+int drawable ic_drawer 0x7f02003c
+int drawable ic_launcher 0x7f02003d
 int id aarti_viewpager 0x7f06002c
 int id accordion 0x7f060029
 int id action_bar 0x7f060047

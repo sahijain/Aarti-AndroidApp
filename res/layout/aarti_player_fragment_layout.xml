@@ -24,12 +24,14 @@
          <ImageButton
              android:id="@+id/play_pause"
              style="@android:style/MediaButton.Play"
-             android:layout_alignParentLeft="true" />
+             android:layout_alignParentLeft="true" 
+             android:src="@drawable/ic_action_pause"/>
 
          <ImageButton
              android:id="@+id/repeat"
              style="@android:style/MediaButton.Play"
-             android:layout_alignParentRight="true" />
+             android:layout_alignParentRight="true" 
+             android:src="@drawable/ic_action_replay"/>
 
          <TextView
              android:id="@+id/currenttime"

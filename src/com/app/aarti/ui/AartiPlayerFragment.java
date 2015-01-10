@@ -1,6 +1,7 @@
 package com.app.aarti.ui;
 
-import android.app.ActionBar;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,34 +9,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Handler.Callback;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.app.aarti.R;
 import com.app.aarti.controller.MainActivityController;
 import com.app.aarti.controller.MediaPlayerService;
-import com.app.aarti.controller.MediaPlayerService.PlayType;
 import com.app.aarti.controller.MediaPlayerUtility;
 import com.app.aarti.lrc.ILrcView;
-import com.app.aarti.lrc.ILrcView.LrcViewListener;
 import com.app.aarti.lrc.LrcRow;
 import com.app.aarti.lrc.controller.LrcController;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AartiPlayerFragment extends Fragment implements
 		SeekBar.OnSeekBarChangeListener, View.OnClickListener,
@@ -171,22 +164,25 @@ public class AartiPlayerFragment extends Fragment implements
 	}
 
 	public void onClick(View paramView) {
+
 		if (paramView.equals(this.mPlayPauseButton)) {
 			this.mMainActivityController.playOrPause();
+		} else if (paramView.equals(this.mRepeatButton)) {
+			if (MediaPlayerService.PlayType.NONE == this.mMainActivityController
+					.getPlayType()) {
+				this.mRepeatButton
+						.setImageResource(R.drawable.ic_action_repeat);
+				this.mMainActivityController
+						.setPlayType(MediaPlayerService.PlayType.REPEAT_CURRENT);
+				return;
+			} else {
+				this.mRepeatButton
+						.setImageResource(R.drawable.ic_action_replay);
+				this.mMainActivityController
+						.setPlayType(MediaPlayerService.PlayType.NONE);
+			}
 		}
-		while (!paramView.equals(this.mRepeatButton)) {
-			return;
-		}
-		if (MediaPlayerService.PlayType.NONE == this.mMainActivityController
-				.getPlayType()) {
-			this.mRepeatButton.setImageResource(2130837510);
-			this.mMainActivityController
-					.setPlayType(MediaPlayerService.PlayType.REPEAT_CURRENT);
-			return;
-		}
-		this.mRepeatButton.setImageResource(2130837511);
-		this.mMainActivityController
-				.setPlayType(MediaPlayerService.PlayType.NONE);
+
 	}
 
 	public void onCreate(Bundle paramBundle) {
@@ -202,22 +198,24 @@ public class AartiPlayerFragment extends Fragment implements
 
 	public View onCreateView(LayoutInflater paramLayoutInflater,
 			ViewGroup paramViewGroup, Bundle paramBundle) {
+
 		Log.d("Sahil", "AartiPlayerFragment: onCreateView() of Fragment");
-		View localView = paramLayoutInflater.inflate(2130903041,
-				paramViewGroup, false);
-		this.mLrcView = ((ILrcView) localView.findViewById(2131099664));
+		View localView = paramLayoutInflater.inflate(
+				R.layout.aarti_player_fragment_layout, paramViewGroup, false);
+		this.mLrcView = ((ILrcView) localView.findViewById(R.id.lrcview));
 		this.mCurrentDurationText = ((TextView) localView
-				.findViewById(2131099668));
+				.findViewById(R.id.currenttime));
 		this.mTotalDurationText = ((TextView) localView
-				.findViewById(2131099669));
+				.findViewById(R.id.totaltime));
 		this.mPlayPauseButton = ((ImageButton) localView
-				.findViewById(2131099666));
+				.findViewById(R.id.play_pause));
 		this.mPlayPauseButton.setOnClickListener(this);
-		this.mRepeatButton = ((ImageButton) localView.findViewById(2131099667));
+		this.mRepeatButton = ((ImageButton) localView.findViewById(R.id.repeat));
 		this.mRepeatButton.setOnClickListener(this);
-		this.mProgressBar = ((SeekBar) localView.findViewById(16908301));
+		this.mProgressBar = ((SeekBar) localView
+				.findViewById(android.R.id.progress));
 		this.mProgressBar.setOnSeekBarChangeListener(this);
-		setHasOptionsMenu(true);
+		// setHasOptionsMenu(true);
 		return localView;
 	}
 
@@ -288,10 +286,11 @@ public class AartiPlayerFragment extends Fragment implements
 		this.mMainActivityController.onResume();
 		updateLRCView(true);
 		if (this.mMainActivityController.isPlaying()) {
-			this.mPlayPauseButton.setImageResource(2130837508);
-			return;
+			this.mPlayPauseButton.setImageResource(R.drawable.ic_action_pause);
+
+		} else {
+			this.mPlayPauseButton.setImageResource(R.drawable.ic_action_play);
 		}
-		this.mPlayPauseButton.setImageResource(2130837509);
 	}
 
 	public void onStartTrackingTouch(SeekBar paramSeekBar) {

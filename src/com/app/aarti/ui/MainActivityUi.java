@@ -130,7 +130,7 @@ public class MainActivityUi implements AdapterView.OnItemClickListener {
 			break;
 			
 		default:
-			return;
+			break;
 		}
 		
 	}
@@ -148,39 +148,46 @@ public class MainActivityUi implements AdapterView.OnItemClickListener {
 	}
 
 	private class ListViewAdapter extends BaseAdapter {
-		
-		private TypedArray mListIconArray;
-		private String[] mListStringArray;
 
-		public ListViewAdapter(String[] paramArrayOfString,
-				TypedArray paramTypedArray) {
-			mListStringArray = paramArrayOfString;
-			mListIconArray = paramTypedArray;
+		private String[] mListStringArray;
+		private TypedArray mListIconArray;
+
+		public ListViewAdapter(String[] array, TypedArray drawerIcons) {
+			mListStringArray = array;
+			mListIconArray = drawerIcons;
 		}
 
+		@Override
 		public int getCount() {
 			return mListStringArray.length;
 		}
 
-		public Object getItem(int paramInt) {
-			return mListStringArray[paramInt];
+		@Override
+		public Object getItem(int arg0) {
+			return mListStringArray[arg0];
 		}
 
-		public long getItemId(int paramInt) {
-			return 0L;
+		@Override
+		public long getItemId(int arg0) {
+			return 0;
 		}
 
-		public View getView(int paramInt, View paramView,
-				ViewGroup paramViewGroup) {
-			if (paramView == null) {
-				paramView = mActivity.getLayoutInflater()
-						.inflate(2130903042, paramViewGroup, false);
+		@Override
+		public View getView(int position, View ConvertView, ViewGroup container) {
+			if (ConvertView == null) {
+				LayoutInflater inflater = mActivity.getLayoutInflater();
+				ConvertView = inflater.inflate(
+						R.layout.drawer_list_item_layout, container, false);
+
 			}
-			((ImageView) paramView.findViewById(2131099670))
-					.setImageDrawable(mListIconArray.getDrawable(paramInt));
-			((TextView) paramView.findViewById(2131099671))
-					.setText(mListStringArray[paramInt]);
-			return paramView;
+
+			ImageView image = (ImageView) ConvertView.findViewById(R.id.icon);
+			image.setImageDrawable(mListIconArray.getDrawable(position));
+
+			TextView tv = (TextView) ConvertView.findViewById(R.id.title);
+			tv.setText(mListStringArray[position]);
+
+			return ConvertView;
 		}
 	}
 

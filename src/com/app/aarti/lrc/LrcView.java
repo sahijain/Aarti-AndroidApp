@@ -66,65 +66,67 @@ public class LrcView extends View implements ILrcView {
 		setTwoPointerLocation(paramMotionEvent);
 	}
 
-	private void doSeek(MotionEvent paramMotionEvent) {
-		float f1 = paramMotionEvent.getY();
-		float f2 = f1 - this.mLastMotionY;
-		if (Math.abs(f2) < this.mMinSeekFiredOffset) {
+	private void doSeek(MotionEvent event) {
+		float y = event.getY();
+		float offsetY = y - mLastMotionY; // touch offset.
+		if (Math.abs(offsetY) < mMinSeekFiredOffset) {
+			// move to short ,do not fire seek action
 			return;
 		}
-		this.mDisplayMode = 1;
-		int i = Math.abs((int) f2 / this.mLrcFontSize);
-		Log.d("LrcView", "move new hightlightrow : " + this.mHignlightRow
-				+ " offsetY: " + f2 + " rowOffset:" + i);
-		if (f2 < 0.0F) {
-			this.mHignlightRow = (i + this.mHignlightRow);
+		mDisplayMode = DISPLAY_MODE_SEEK;
+		int rowOffset = Math.abs((int) offsetY / mLrcFontSize); // highlight row
+																// offset.
+		Log.d(TAG, "move new hightlightrow : " + mHignlightRow + " offsetY: "
+				+ offsetY + " rowOffset:" + rowOffset);
+		if (offsetY < 0) {
+			// finger move up
+			mHignlightRow += rowOffset;
+		} else if (offsetY > 0) {
+			// finger move down
+			mHignlightRow -= rowOffset;
 		}
-		for (;;) {
-			this.mHignlightRow = Math.max(0, this.mHignlightRow);
-			this.mHignlightRow = Math.min(this.mHignlightRow, -1
-					+ this.mLrcRows.size());
-			if (i <= 0) {
-				break;
-			}
-			this.mLastMotionY = f1;
+		mHignlightRow = Math.max(0, mHignlightRow);
+		mHignlightRow = Math.min(mHignlightRow, mLrcRows.size() - 1);
+
+		if (rowOffset > 0) {
+			mLastMotionY = y;
 			invalidate();
-			return;
-			if (f2 > 0.0F) {
-				this.mHignlightRow -= i;
-			}
 		}
 	}
 
-	private int getScale(MotionEvent paramMotionEvent) {
-		Log.d("LrcView", "scaleSize getScale");
-		float f1 = paramMotionEvent.getX(0);
-		float f2 = paramMotionEvent.getY(0);
-		float f3 = paramMotionEvent.getX(1);
-		float f4 = paramMotionEvent.getY(1);
-		float f5 = Math.abs(this.mPointerOneLastMotion.x
-				- this.mPointerTwoLastMotion.x);
-		float f6 = Math.abs(f3 - f1);
-		float f7 = Math.abs(this.mPointerOneLastMotion.y
-				- this.mPointerTwoLastMotion.y);
-		float f8 = Math.abs(f4 - f2);
-		float f9 = Math.max(Math.abs(f6 - f5), Math.abs(f8 - f7));
-		if (f9 == Math.abs(f6 - f5)) {
-			if (f6 > f5) {
-			}
-			for (i = 1;; i = 0) {
-				Log.d("LrcView", "scaleSize maxOffset:" + f9);
-				if (i == 0) {
-					break;
-				}
-				return (int) (f9 / 10.0F);
-			}
+	private int getScale(MotionEvent event) {
+		Log.d(TAG, "scaleSize getScale");
+		float x0 = event.getX(0);
+		float y0 = event.getY(0);
+		float x1 = event.getX(1);
+		float y1 = event.getY(1);
+		float maxOffset = 0; // max offset between x or y axis,used to decide
+								// scale size
+
+		boolean zoomin = false;
+
+		float oldXOffset = Math.abs(mPointerOneLastMotion.x
+				- mPointerTwoLastMotion.x);
+		float newXoffset = Math.abs(x1 - x0);
+
+		float oldYOffset = Math.abs(mPointerOneLastMotion.y
+				- mPointerTwoLastMotion.y);
+		float newYoffset = Math.abs(y1 - y0);
+
+		maxOffset = Math.max(Math.abs(newXoffset - oldXOffset),
+				Math.abs(newYoffset - oldYOffset));
+		if (maxOffset == Math.abs(newXoffset - oldXOffset)) {
+			zoomin = newXoffset > oldXOffset ? true : false;
+		} else {
+			zoomin = newYoffset > oldYOffset ? true : false;
 		}
-		if (f8 > f7) {
-		}
-		for (int i = 1;; i = 0) {
-			break;
-		}
-		return -(int) (f9 / 10.0F);
+
+		Log.d(TAG, "scaleSize maxOffset:" + maxOffset);
+
+		if (zoomin)
+			return (int) (maxOffset / 10);
+		else
+			return -(int) (maxOffset / 10);
 	}
 
 	private void setNewFontSize(int paramInt) {
@@ -201,75 +203,88 @@ public class LrcView extends View implements ILrcView {
 		}
 	}
 
-	public boolean onTouchEvent(MotionEvent paramMotionEvent) {
-		if ((this.mLrcRows == null) || (this.mLrcRows.size() == 0)) {
-			return super.onTouchEvent(paramMotionEvent);
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+
+		if (mLrcRows == null || mLrcRows.size() == 0) {
+			return super.onTouchEvent(event);
 		}
-		switch (paramMotionEvent.getAction()) {
-		}
-		for (;;) {
-			return true;
-			Log.d("LrcView", "down,mLastMotionY:" + this.mLastMotionY);
-			this.mLastMotionY = paramMotionEvent.getY();
-			this.mIsFirstMove = true;
+
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			Log.d(TAG, "down,mLastMotionY:" + mLastMotionY);
+			mLastMotionY = event.getY();
+			mIsFirstMove = true;
 			invalidate();
-			continue;
-			if (paramMotionEvent.getPointerCount() == 2) {
-				Log.d("LrcView", "two move");
-				doScale(paramMotionEvent);
+			break;
+		case MotionEvent.ACTION_MOVE:
+
+			if (event.getPointerCount() == 2) {
+				Log.d(TAG, "two move");
+				doScale(event);
 				return true;
 			}
-			Log.d("LrcView", "one move");
-			if (this.mDisplayMode == 2) {
+			Log.d(TAG, "one move");
+			// single pointer mode ,seek
+			if (mDisplayMode == DISPLAY_MODE_SCALE) {
+				// if scaling but pointer become not two ,do nothing.
 				return true;
 			}
-			doSeek(paramMotionEvent);
-			continue;
-			if (this.mDisplayMode == 1) {
-				seekLrc(this.mHignlightRow);
+
+			doSeek(event);
+			break;
+		case MotionEvent.ACTION_CANCEL:
+		case MotionEvent.ACTION_UP:
+			if (mDisplayMode == DISPLAY_MODE_SEEK) {
+				seekLrc(mHignlightRow);
 				if (this.mLrcViewListener != null) {
 					this.mLrcViewListener
 							.onLrcSeeked(((LrcRow) this.mLrcRows
 									.get(this.mHignlightRow)).time, null);
 				}
 			}
-			this.mDisplayMode = 0;
+			mDisplayMode = DISPLAY_MODE_NORMAL;
 			invalidate();
+			break;
 		}
+		return true;
 	}
 
-	public void seekLrc(int paramInt)
-  {
-    if ((this.mLrcRows == null) || (paramInt < 0) || (paramInt > this.mLrcRows.size())) {
-      return;
+	public void seekLrc(int position) {
+	    if(mLrcRows == null || position < 0 || position > mLrcRows.size()) {
+	        return;
+	    }
+		LrcRow lrcRow = mLrcRows.get(position);
+		mHignlightRow = position;
+		invalidate();
+		/*if(mLrcViewListener != null){
+			mLrcViewListener.onLrcSeeked(position, lrcRow);
+		}*/
+	}
+
+	public void seekLrcToTime(long time) {
+        if(mLrcRows == null || mLrcRows.size() == 0) {
+            return;
+        }
+        
+        if(mDisplayMode != DISPLAY_MODE_NORMAL) {
+            // touching
+            return;
+        }
+        
+        Log.d(TAG, "seekLrcToTime:" + time);
+        // find row
+        for(int i = 0; i < mLrcRows.size(); i++) {
+            LrcRow current = mLrcRows.get(i);
+            LrcRow next = i + 1 == mLrcRows.size() ? null : mLrcRows.get(i + 1);
+            
+            if((time >= current.time && next != null && time < next.time)
+                    || (time > current.time && next == null)) {
+                seekLrc(i);
+                return;
+            }
+        }
     }
-    ((LrcRow)this.mLrcRows.get(paramInt));
-    this.mHignlightRow = paramInt;
-    invalidate();
-  }
-
-	public void seekLrcToTime(long paramLong) {
-		if ((this.mLrcRows == null) || (this.mLrcRows.size() == 0)) {
-		}
-		for (;;) {
-			return;
-			if (this.mDisplayMode == 0) {
-				Log.d("LrcView", "seekLrcToTime:" + paramLong);
-				for (int i = 0; i < this.mLrcRows.size(); i++) {
-					LrcRow localLrcRow1 = (LrcRow) this.mLrcRows.get(i);
-					if (i + 1 == this.mLrcRows.size()) {
-					}
-					for (LrcRow localLrcRow2 = null; ((paramLong >= localLrcRow1.time)
-							&& (localLrcRow2 != null) && (paramLong < localLrcRow2.time))
-							|| ((paramLong > localLrcRow1.time) && (localLrcRow2 == null)); localLrcRow2 = (LrcRow) this.mLrcRows
-							.get(i + 1)) {
-						seekLrc(i);
-						return;
-					}
-				}
-			}
-		}
-	}
 
 	public void setListener(ILrcView.LrcViewListener paramLrcViewListener) {
 		this.mLrcViewListener = paramLrcViewListener;
