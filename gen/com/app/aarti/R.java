@@ -1717,10 +1717,11 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f060044;
         public static final int action_mode_bar_stub=0x7f060043;
         public static final int action_mode_close_button=0x7f060036;
-        public static final int action_settings=0x7f06005f;
+        public static final int action_settings=0x7f060060;
         public static final int activity_chooser_view_content=0x7f060037;
         public static final int always=0x7f06000d;
         public static final int beginning=0x7f060012;
+        public static final int bell=0x7f06005f;
         public static final int button1=0x7f06005c;
         public static final int button2=0x7f06005d;
         public static final int button3=0x7f06005e;
@@ -1856,7 +1857,8 @@ containing a value of this type.
         public static final int viewpager_item_layout=0x7f03001c;
     }
     public static final class menu {
-        public static final int main=0x7f0e0000;
+        public static final int aarti_player=0x7f0e0000;
+        public static final int main=0x7f0e0001;
     }
     public static final class raw {
         public static final int durga_aarti=0x7f050000;
@@ -1868,8 +1870,10 @@ containing a value of this type.
         public static final int hanuman_chalisa=0x7f050006;
         public static final int shiv_aarti=0x7f050007;
         public static final int shiv_mantra=0x7f050008;
-        public static final int vishnu_aarti=0x7f050009;
-        public static final int vishnu_stuti=0x7f05000a;
+        public static final int temple_bell_fast=0x7f050009;
+        public static final int temple_bells_faster=0x7f05000a;
+        public static final int vishnu_aarti=0x7f05000b;
+        public static final int vishnu_stuti=0x7f05000c;
     }
     public static final class string {
         public static final int Exit=0x7f0b001b;

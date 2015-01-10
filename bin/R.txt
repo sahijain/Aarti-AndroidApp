@@ -374,10 +374,11 @@ int id action_menu_presenter 0x7f06001b
 int id action_mode_bar 0x7f060044
 int id action_mode_bar_stub 0x7f060043
 int id action_mode_close_button 0x7f060036
-int id action_settings 0x7f06005f
+int id action_settings 0x7f060060
 int id activity_chooser_view_content 0x7f060037
 int id always 0x7f06000d
 int id beginning 0x7f060012
+int id bell 0x7f06005f
 int id button1 0x7f06005c
 int id button2 0x7f06005d
 int id button3 0x7f06005e
@@ -485,7 +486,8 @@ int layout drawer_list_item_layout 0x7f030019
 int layout notification_layout 0x7f03001a
 int layout support_simple_spinner_dropdown_item 0x7f03001b
 int layout viewpager_item_layout 0x7f03001c
-int menu main 0x7f0e0000
+int menu aarti_player 0x7f0e0000
+int menu main 0x7f0e0001
 int raw durga_aarti 0x7f050000
 int raw durga_mantra 0x7f050001
 int raw ganesh_aarti 0x7f050002
@@ -495,8 +497,10 @@ int raw hanuman_aarti 0x7f050005
 int raw hanuman_chalisa 0x7f050006
 int raw shiv_aarti 0x7f050007
 int raw shiv_mantra 0x7f050008
-int raw vishnu_aarti 0x7f050009
-int raw vishnu_stuti 0x7f05000a
+int raw temple_bell_fast 0x7f050009
+int raw temple_bells_faster 0x7f05000a
+int raw vishnu_aarti 0x7f05000b
+int raw vishnu_stuti 0x7f05000c
 int string Exit 0x7f0b001b
 int string Feedback 0x7f0b0018
 int string Ganesh_Aarti 0x7f0b0015

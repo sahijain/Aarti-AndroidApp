@@ -193,7 +193,7 @@ public class AartiPlayerFragment extends Fragment implements
 	public void onCreateOptionsMenu(Menu paramMenu,
 			MenuInflater paramMenuInflater) {
 		super.onCreateOptionsMenu(paramMenu, paramMenuInflater);
-		paramMenuInflater.inflate(2131361793, paramMenu);
+		paramMenuInflater.inflate(R.menu.aarti_player, paramMenu);
 	}
 
 	public View onCreateView(LayoutInflater paramLayoutInflater,
@@ -215,7 +215,7 @@ public class AartiPlayerFragment extends Fragment implements
 		this.mProgressBar = ((SeekBar) localView
 				.findViewById(android.R.id.progress));
 		this.mProgressBar.setOnSeekBarChangeListener(this);
-		// setHasOptionsMenu(true);
+		setHasOptionsMenu(true);
 		return localView;
 	}
 
@@ -250,8 +250,8 @@ public class AartiPlayerFragment extends Fragment implements
 	public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
 		switch (paramMenuItem.getItemId()) {
 
-		case 34:
-			if (paramMenuItem.getTitle().toString().equals("bell_not_enabled")) {
+		case R.id.bell:
+			if (paramMenuItem.getTitle().toString().equalsIgnoreCase("bell_not_enabled")) {
 				this.mMainActivityController.playBellMediaPlayer();
 				paramMenuItem.setTitle("bell_selected");
 			} else {
