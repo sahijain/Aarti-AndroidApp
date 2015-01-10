@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Aarti</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="Vishnu_Aarti"> vishnu</string>
+    <string name="Gayatri_Aarti"> gayatri</string>
+    <string name="Ganesh_Aarti"> ganesh</string>
+    <string name="Hanuman_Aarti"> hanuman</string>
+
+    <string-array name="Aarti_list">
+        <item> @string/Vishnu_Aarti</item>
+        <item> @string/Gayatri_Aarti</item>
+        <item> @string/Ganesh_Aarti</item>
+        <item> @string/Hanuman_Aarti</item>
+    </string-array>
+
+    <string name="Rate_This_App"> Rate this App</string>
+    <string name="Feedback"> Feedback</string>
+    <string name="Like_on_Fb"> Like on Fb</string>
+    <string name="Share"> Share</string>
+    <string name="Exit"> Exit</string>
+
+    <string-array name="drwawer_list">
+        <item> @string/Rate_This_App</item>
+        <item> @string/Feedback</item>
+        <item> @string/Like_on_Fb</item>
+        <item> @string/Share</item>
+    </string-array>
+    
+    <string name="drawer_open"> </string>
+    <string name="drawer_close"> </string>
+    
+    <string-array name="viewpager_effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+
+</resources>

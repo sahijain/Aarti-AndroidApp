@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
+    android:clickable="true"
+    android:orientation="vertical" >
+    
+     <com.app.aarti.lrc.LrcView
+        android:id="@+id/lrcview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/controls_layout"/>
+
+     <RelativeLayout
+         android:id="@id/controls_layout"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:layout_marginBottom="28dp"
+         android:gravity="center_horizontal|center_vertical" >
+
+         <ImageButton
+             android:id="@+id/play_pause"
+             style="@android:style/MediaButton.Play"
+             android:layout_alignParentLeft="true" />
+
+         <ImageButton
+             android:id="@+id/repeat"
+             style="@android:style/MediaButton.Play"
+             android:layout_alignParentRight="true" />
+
+         <TextView
+             android:id="@+id/currenttime"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_above="@android:id/progress"
+             android:layout_toRightOf="@id/play_pause"
+             android:paddingLeft="12dip"
+             android:shadowColor="#ff000000"
+             android:shadowDx="0"
+             android:shadowDy="0"
+             android:shadowRadius="3"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+             android:textStyle="bold" />
+
+         <TextView
+             android:id="@+id/totaltime"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_above="@android:id/progress"
+             android:layout_toLeftOf="@id/repeat"
+             android:paddingRight="12dip"
+             android:shadowColor="#ff000000"
+             android:shadowDx="0"
+             android:shadowDy="0"
+             android:shadowRadius="3"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+             android:textStyle="bold" />
+
+         <SeekBar
+             android:id="@android:id/progress"
+             style="?android:attr/seekBarStyle"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_alignBottom="@id/play_pause"
+             android:layout_toLeftOf="@id/repeat"
+             android:layout_toRightOf="@id/play_pause"
+             android:paddingBottom="6dip" />
+     </RelativeLayout>
+"
+
+</RelativeLayout>

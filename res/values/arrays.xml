@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     <array name="drawer_icons">
+        <item>@drawable/ic_action_important</item>
+        <item>@drawable/ic_action_email</item>
+        <item>@drawable/ic_action_good</item>
+        <item>@drawable/ic_action_share</item>
+    </array> 
+
+</resources>
