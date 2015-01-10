@@ -52,12 +52,12 @@ public class MediaPlayerService extends Service implements
 				if (MediaPlayerService.this.mMediaPlayer.isPlaying()) {
 					MediaPlayerService.this.mNotificationTemplate
 							.setImageViewResource(R.id.notification_base_play,
-									2130837509);
+									R.drawable.ic_action_play);
 
 				} else {
 					MediaPlayerService.this.mNotificationTemplate
 							.setImageViewResource(R.id.notification_base_play,
-									2130837508);
+									R.drawable.ic_action_pause);
 				}
 				MediaPlayerService.this.mNotificationManager.notify(
 						NOTIFICATION_ID, MediaPlayerService.this.mNotification);
@@ -92,9 +92,9 @@ public class MediaPlayerService extends Service implements
 	}
 
 	private void initCollapsedLayout() {
-		this.mNotificationTemplate.setTextViewText(2131099674, "Aarti");
+		this.mNotificationTemplate.setTextViewText(R.id.notification_base_line_one, "Aarti");
 		this.mNotificationTemplate.setTextViewText(
-				2131099675,
+				R.id.notification_base_line_two,
 				((Aarti) this.mAartiList.get(this.mCurrentIndex))
 						.getmAartiName()
 						+ new StringBuilder(" ").append(this.mCurrentlyPlaying)

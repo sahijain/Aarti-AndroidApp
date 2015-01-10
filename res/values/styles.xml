@@ -37,7 +37,7 @@
     </style>
 
     <style name="NotificationAction.Play" parent="@style/NotificationAction">
-        <item name="android:src">@drawable/ic_action_play</item>
+        <item name="android:src">@drawable/ic_action_pause</item>
     </style>
 
     <style name="NotificationAction.Collapse" parent="@style/NotificationAction">
